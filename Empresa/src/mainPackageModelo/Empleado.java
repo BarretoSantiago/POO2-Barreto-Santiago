@@ -5,9 +5,9 @@ import java.time.*;
 public abstract class Empleado {
 	private String nombre;
 	private String direccion;
-	private String estadoCivil;
+	private EstadoCivil estadoCivil;
 	private LocalDate fechaNac;
-	private Double sueldoBase;
+	private double sueldoBase;
 	
 	public String getNombre() {
 		return nombre;
@@ -21,10 +21,10 @@ public abstract class Empleado {
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
-	public String getEstadoCivil() {
+	public EstadoCivil getEstadoCivil() {
 		return estadoCivil;
 	}
-	public void setEstadoCivil(String estadoCivil) {
+	public void setEstadoCivil(EstadoCivil estadoCivil) {
 		this.estadoCivil = estadoCivil;
 	}
 	public LocalDate getFechaNac() {
@@ -33,14 +33,14 @@ public abstract class Empleado {
 	public void setFechaNac(LocalDate fechaNac) {
 		this.fechaNac = fechaNac;
 	}
-	public Double getSueldoBase() {
+	public double getSueldoBase() {
 		return sueldoBase;
 	}
 	public void setSueldoBase(Double sueldoBase) {
 		this.sueldoBase = sueldoBase;
 	}
 	
-	public Empleado(String nombre, String direccion, String estadoCivil, LocalDate fechaNac, Double sueldoBase) {
+	public Empleado(String nombre, String direccion, EstadoCivil estadoCivil, LocalDate fechaNac, double sueldoBase) {
 		this.nombre = nombre;
 		this.direccion = direccion;
 		this.estadoCivil = estadoCivil;
@@ -49,4 +49,15 @@ public abstract class Empleado {
 	}
 	
 	
+	public int getEdad() {
+		LocalDate diaActual = LocalDate.now();
+		Period periodo = Period.between(this.getFechaNac(), diaActual);
+		return periodo.getYears();
+	}
+	
+	public abstract double retenciones();
+	public abstract double sueldoBruto();
+	public double sueldoNeto() {
+		return this.sueldoBruto()-this.retenciones();
+	};	
 }
